@@ -1,3 +1,5 @@
+#! home/susannah/.nvm/versions/node/v11.15.0/bin/node
+
 function drawLine(num) {
     const bar = '\u2501';
     return bar.repeat(num);
@@ -44,8 +46,11 @@ function drawBarsAround(x) {
 
 
 function boxOrParseIt() {
-    if (process.argv[2].includes('\.csv')) {
-        boxItMultiCol();
+    const input = process.argv[2];
+    if (input !== undefined && input.includes('\.csv')) {
+        const fs = require('fs');
+        const textByLine = fs.readFileSync(input).toString().split("\n");
+        return boxItMultiCol(textByLine);
     } else {
         const arrOfStr = [];
         let i = 2;
@@ -53,7 +58,7 @@ function boxOrParseIt() {
             arrOfStr.push(process.argv[i]);
             i += 1;
         }
-        boxIt(arrOfStr);
+        return boxIt(arrOfStr);
     }
 }
 
@@ -84,20 +89,13 @@ function boxIt(arrOfStr) {
 // emptyArr = [];
 // console.log(boxIt(emptyArr));
 
-$.ajax({
-    url: process.argv[2],
-    success: function(data) {
-        const arr = $.csvtoArray(data);
-    },
-    dataType: 'text',
-  });
-
-  _oncomplete: function boxItMultiCol(arr) {
+function boxItMultiCol(arr) {
     const arr0 = arr.split('\n')[0];
     const arr1 = arr.split('\n')[1];
     const len0 = Math.max(Math.max(...arr0), 4);
     const len1 = Math.max(Math.max(...arr1), 5);
     length = len0 + len1;
+    
     output = drawTopBorder(arr0 + arr1) + drawBarsAround('Name' + ' '.repeat(len0 - 4)) + drawBarsAround('House' + ' '.repeat(len1 - 5));
     for (let i = 0; i < arr0.length; i++) {
         output += drawMiddleBorder(length) + '\n';
