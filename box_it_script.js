@@ -43,6 +43,11 @@ function drawBarsAround(x) {
 // console.log(drawBarsAround("You are Jane  "));
 // console.log(drawBarsAround("  You are Bill"));
 
+function drawBarAfter(x) {
+    const verticalBar = '\u2503';
+    return x + verticalBar;
+}
+
 
 
 function boxOrParseIt() {
@@ -90,21 +95,46 @@ function boxIt(arrOfStr) {
 // console.log(boxIt(emptyArr));
 
 function boxItMultiCol(arr) {
-    const arr0 = arr.split('\n')[0];
-    const arr1 = arr.split('\n')[1];
-    const len0 = Math.max(Math.max(...arr0), 4);
-    const len1 = Math.max(Math.max(...arr1), 5);
-    length = len0 + len1;
-    
-    output = drawTopBorder(arr0 + arr1) + drawBarsAround('Name' + ' '.repeat(len0 - 4)) + drawBarsAround('House' + ' '.repeat(len1 - 5));
-    for (let i = 0; i < arr0.length; i++) {
-        output += drawMiddleBorder(length) + '\n';
-        tmp0 = arr0[i] + " ".repeat(len0 - arr0[i].length);
-        tmp1 = arr1[i] + ' '.repeat(len1 - arr1[i].length);
-        output += drawBarsAround(tmp0) + drawBarsAround(tmp1) + '\n';
+    const headers = [];
+    for (const str of arr[0]) {
+        headers.push(str);
     }
-    output += drawBottomBorder(length); 
+    numOfCol = headers.length;
+    numOfRow = arr.length;
+    const lengths = [];
+    for (let col in headers) {
+        const tmp = [];
+        for (let row of arr) {
+            tmp.push(row[col].length);
+        }
+        lengths.push(Math.max(...tmp));  
+    }
+    let lengthTotal = 0;
+    for (const num of lengths) {
+        lengthTotal += num;
+    }
+    lengthTotal += headers.length - 1;
+    output = drawTopBorder(lengthTotal) + '\n' + '\u2503';
+    for (i = 0; i < headers.length; i++) {
+        output += drawBarAfter(headers[i] + ' '.repeat(lengths[i]-headers[i].length));
+    }
+    output += '\n';
+    for (i = 1; i < arr.length; i++) {
+        output += drawMiddleBorder(lengthTotal) + '\n' + '\u2503';
+        for (j = 0; j < headers.length; j++) {
+            output += drawBarAfter(arr[i][j] + " ".repeat(lengths[j]-arr[i][j].length));
+        }
+        output += '\n';
+    }
+    // for (let i = 0; i < arr0.length; i++) {
+    //     output += drawMiddleBorder(length) + '\n';
+    //     tmp0 = arr0[i] + " ".repeat(len0 - arr0[i].length);
+    //     tmp1 = arr1[i] + ' '.repeat(len1 - arr1[i].length);
+    //     output += drawBarsAround(tmp0) + drawBarsAround(tmp1) + '\n';
+    output += drawBottomBorder(lengthTotal); 
     return output;
 }
+
+// console.log(boxItMultiCol([['names','house'],['jon snow','stark'],['other name','other house']]));
 
 console.log(boxOrParseIt());
