@@ -1,4 +1,4 @@
-#!/home/susannah/.nvm/versions/node/v11.15.0/bin/node
+#! home/susannah/.nvm/versions/node/v11.15.0/bin/node
 
 function drawLine(num) {
     const bar = '\u2501';
@@ -54,8 +54,7 @@ function boxOrParseIt() {
     const input = process.argv[2];
     if (input !== undefined && input.includes('\.csv')) {
         const fs = require('fs');
-        const textByLine = fs.readFileSync(input).toString().split("\r\n");
-        console.log(textByLine);
+        const textByLine = fs.readFileSync(input).toString().split("\n");
         return boxItMultiCol(textByLine);
     } else {
         const arrOfStr = [];
@@ -97,7 +96,9 @@ function boxIt(arrOfStr) {
 
 function boxItMultiCol(arr) {
     const headers = [];
-    headers.push(arr[0]);
+    for (const str of arr[0]) {
+        headers.push(str);
+    }
     numOfCol = headers.length;
     numOfRow = arr.length;
     const lengths = [];
@@ -134,6 +135,6 @@ function boxItMultiCol(arr) {
     return output;
 }
 
-console.log(boxItMultiCol([['names','house'],['jon snow','stark'],['other name','other house']]));
+// console.log(boxItMultiCol([['names','house'],['jon snow','stark'],['other name','other house']]));
 
 console.log(boxOrParseIt());
