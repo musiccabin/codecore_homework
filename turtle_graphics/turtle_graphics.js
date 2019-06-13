@@ -123,7 +123,7 @@ class Turtle {
                 output += ' ' + j + ' ';
             }
             for (let i = minX; i <= maxX; i++) {
-                let tmp = [i,j].toString().split(',').join('');
+                let tmp = [i, j].toString().split(',').join('');
                 // console.log(tmp);
                 if (tmpArr.includes(tmp)) {
                     output += '=  ';
@@ -145,43 +145,61 @@ class Turtle {
 
 let input = process.argv[2];
 if (input !== undefined) {
-    let initX, initY;
-    if (input[0] === 't') {
-        initX = parseInt(input[1]);
-        initY = parseInt(input[3]);
-        input = input.split('').slice(5);
-    } else {
-        initX = 0;
-        initY = 0;
-        input = input.split('');
-    }
-    const flash = new Turtle(initX, initY);
-    // const tmp = [], arr = [];
-    // for (const element of input) {
-    //     arr.push(element);
-    // }
-    while (input.length > 0) {
-        if (input[0] === 'f') {
-            input.shift();
-            let n = '';
-            i = 0;
-            // console.log(input[i]);
-            while (['0', '1', '2', '3,', '4', '5', '6', '7', '8', '9'].includes(input[i])) {
-                n += input[i];
+    const printPath = (input) => {
+        let initX, initY;
+        if (input[0] === 't') {
+            initX = parseInt(input[1]);
+            initY = parseInt(input[3]);
+            input = input.split('').slice(5);
+        } else {
+            initX = 0;
+            initY = 0;
+            input = input.split('');
+        }
+        const flash = new Turtle(initX, initY);
+        // const tmp = [], arr = [];
+        // for (const element of input) {
+        //     arr.push(element);
+        // }
+        while (input.length > 0) {
+            if (input[0] === 'f') {
+                input.shift();
+                let n = '';
+                i = 0;
+                // console.log(input[i]);
+                while (['0', '1', '2', '3,', '4', '5', '6', '7', '8', '9'].includes(input[i])) {
+                    n += input[i];
+                    input.shift();
+                }
+                flash.forward(parseInt(n));
+            } else if (input[0] === 'r') {
+                flash.right();
+                input.shift();
+            } else if (input[0] === 'l') {
+                flash.left();
                 input.shift();
             }
-            flash.forward(parseInt(n));
-        } else if (input[0] === 'r') {
-            flash.right();
-            input.shift();
-        } else if (input[0] === 'l') {
-            flash.left();
-            input.shift();
+            if (input[0] === '-') {
+                input.shift();
+            }
         }
-        if (input[0] === '-') {
-            input.shift();
-        }
+        // console.log(flash.points.toString());
+        return flash.print();
     }
-    // console.log(flash.points.toString());
-    console.log(flash.print());
+    if (input.includes('--output=')) {
+        const tmp = input.split(' ')[0];
+        const newFile = tmp.slice(9);
+        input = process.argv[3];
+        const fs = require('fs');
+        fs.writeFile(newFile, printPath(input), err => {
+            console.log(printPath(input))
+            if (err) {
+                console.log('error!');
+            } else {
+                console.log(`Turtle path printed to ${newFile}!`)
+            }
+        })
+    } else {
+        console.log(printPath(input));
+    }
 }
