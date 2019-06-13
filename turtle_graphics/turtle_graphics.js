@@ -192,7 +192,6 @@ if (input !== undefined) {
         input = process.argv[3];
         const fs = require('fs');
         fs.writeFile(newFile, printPath(input), err => {
-            console.log(printPath(input))
             if (err) {
                 console.log('error!');
             } else {
