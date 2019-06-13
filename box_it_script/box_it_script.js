@@ -1,4 +1,4 @@
-#! home/susannah/.nvm/versions/node/v11.15.0/bin/node
+#! /home/susannah/.nvm/versions/node/v11.15.0/bin/node
 
 function drawLine(num) {
     const bar = '\u2501';
@@ -54,7 +54,9 @@ function boxOrParseIt() {
     const input = process.argv[2];
     if (input !== undefined && input.includes('\.csv')) {
         const fs = require('fs');
-        const textByLine = fs.readFileSync(input).toString().split("\n");
+        let textByLine = fs.readFileSync(input).toString();
+        textByLine.split("\n\r");
+        console.log(textByLine)
         return boxItMultiCol(textByLine);
     } else {
         const arrOfStr = [];
@@ -95,34 +97,41 @@ function boxIt(arrOfStr) {
 // console.log(boxIt(emptyArr));
 
 function boxItMultiCol(arr) {
-    const headers = [];
-    for (const str of arr[0]) {
-        headers.push(str);
-    }
-    numOfCol = headers.length;
-    numOfRow = arr.length;
+    // console.log(arr)
+    const allRows = arr.split('\r\n');
+    headers = allRows[0];
+    // console.log(headers)
+    // numOfCol = headers.length;
+    // numOfRow = arr.length;
+    // console.log(headers)
     const lengths = [];
-    for (let col in headers) {
+    for (let col in headers.split(',')) {
+        // console.log(col)
         const tmp = [];
-        for (let row of arr) {
-            tmp.push(row[col].length);
+        for (const row of allRows) {
+            // console.log(row)
+            tmp.push(row.split(',')[col].length);
         }
+        // console.log(tmp)
         lengths.push(Math.max(...tmp));  
     }
     let lengthTotal = 0;
     for (const num of lengths) {
         lengthTotal += num;
     }
-    lengthTotal += headers.length - 1;
+    // console.log(lengthTotal)
+    lengthTotal += headers.split(',').length - 1;
     output = drawTopBorder(lengthTotal) + '\n' + '\u2503';
-    for (i = 0; i < headers.length; i++) {
-        output += drawBarAfter(headers[i] + ' '.repeat(lengths[i]-headers[i].length));
+    for (i = 0; i < headers.split(',').length; i++) {
+        // console.log(lengths[i]);
+        // console.log(headers[i].length);
+        output += drawBarAfter(headers.split(',')[i] + ' '.repeat(lengths[i]-headers.split(',')[i].length));
     }
     output += '\n';
-    for (i = 1; i < arr.length; i++) {
+    for (i = 1; i < allRows.length; i++) {
         output += drawMiddleBorder(lengthTotal) + '\n' + '\u2503';
-        for (j = 0; j < headers.length; j++) {
-            output += drawBarAfter(arr[i][j] + " ".repeat(lengths[j]-arr[i][j].length));
+        for (j = 0; j < headers.split(',').length; j++) {
+            output += drawBarAfter(allRows[i].split(',')[j] + " ".repeat(lengths[j]-allRows[i].split(',')[j].length));
         }
         output += '\n';
     }
