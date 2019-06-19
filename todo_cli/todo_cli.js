@@ -5,65 +5,74 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+let arrObj;
+let file = process.argv[2];
+if (file === undefined) {
+    file = 'todo_cli.json';
+    arrObj = [];
+} else if (fs.existsSync(file)) {
+    let raw = fs.readFileSync(file).toString();
+    if (raw === '') {
+        arrObj = [];
+    } else {
+        arrObj = JSON.parse(raw);
+    }
+} else {
+   fs.writeFileSync(file, '');
+   arrObj = [];
+}
 console.log('Welcome to Todo CLI!' + '\n' +
     '--------------------' + '\n');
-const menu = "(v) View • (n) New • (cX) Complete • (dX) Delete • (q) Quit" + '\n';
+const menu = "(v) View • (n) New • (cX) Complete • (dX) Delete • (s) Save • (q) Quit" + '\n';
 const recur = () => {
     rl.question(menu, (answer => {
         if (answer === 'q') {
             console.log('see you soon! 😀');
             rl.close();
         } else if (answer === 'v') {
-            if (fs.readFileSync('todo_cli.txt').toString() === '') {
-                console.log('no items on your to-do list.')
+            if (arrObj.length === 0) {
+                console.log('no items on your to-do list.');
                 recur();
             } else {
-                fs.readFile('todo_cli.txt',{encoding: 'utf8'},(err,data) => {
-                    if (err) {
-                        console.log('there is an error.');
-                    } else {
-                        console.log(data);
-                        recur();
+                let output = '';
+                for (let i = 0; i < arrObj.length; i++) {
+                    output += `${i} `;
+                    if (arrObj[i]['completed'] === true) {
+                        output += `[✓] ${arrObj[i]['title']}\n`;
+                    } else if (arrObj[i]['completed'] === false) {
+                        output += `[ ] ${arrObj[i]['title']}\n`;
                     }
-                })
+                }
+                console.log(output);
+                recur();
             }
         } else if (answer === 'n') {
             rl.question('what?' + '\n', answer => {
-                let toAppend = '';
-                let nextNum = 0;
-                if (fs.readFileSync('todo_cli.txt').toString() === '') {
+                // let nextNum = 0;
+                if (arrObj.length === 0) {
                     nextNum = 0;
                 } else {
-                    nextNum = fs.readFileSync('todo_cli.txt').toString().split('\n').length - 1;
+                    nextNum = arrObj.length - 1;
                 }
-                toAppend += nextNum + ' [ ] ' + answer + '\n';
-                fs.appendFile('todo_cli.txt', toAppend, err => {
-                    if (err) {
-                        console.log('there is an error.')
-                    } else {
-                        recur();
-                    }
-                })
+                const toAppend = {};
+                toAppend['completed'] = false;
+                toAppend['title'] = answer;
+                arrObj.push(toAppend);
+                recur();
             })
         } else if (answer[0] === 'c') {
-            let tmpArr = fs.readFileSync('todo_cli.txt').toString().split('\n');
-            if (answer[1] <= tmpArr.length - 2) {
-                let toComplete = tmpArr[answer[1]];
+            if (answer[1] <= arrObj.length - 1) {
+                let toComplete = arrObj[answer[1]]['title'];
                 for (let i = 0; i < toComplete.length; i++) {
                     if (toComplete[i] === ']') {
                         toComplete = toComplete.slice(i + 2);
                         break;
                     }
                 }
-                tmpArr.splice(answer[1], 1, `${answer[1]} [✓] ${toComplete}`);
-                fs.writeFileSync('todo_cli.txt','');
-                for (let i = 0; i < tmpArr.length - 1; i++) {
-                    fs.appendFile('todo_cli.txt', `${tmpArr[i]}\n`, err => {
-                        if (err) {
-                            console.log('there is an error');
-                        }
-                    })
-                }
+                toCompleteObj = {};
+                toCompleteObj['title'] = toComplete;
+                toCompleteObj['completed'] = true;
+                arrObj.splice(answer[1], 1, toCompleteObj);
                 console.log(`Completed "${toComplete}".`);
                 recur();
             } else {
@@ -71,37 +80,32 @@ const recur = () => {
                 recur();
             }
         } else if (answer[0] === 'd') {
-            let tmpArr = fs.readFileSync('todo_cli.txt').toString().split('\n');
-            if (answer[1] <= tmpArr.length - 2) {
-                let toDelete = tmpArr[answer[1]];
+            if (answer[1] <= arrObj.length - 1) {
+                let toDelete = arrObj[answer[1]]['title'];
                 for (let i = 0; i < toDelete.length; i++) {
                     if (toDelete[i] === ']') {
                         toDelete = toDelete.slice(i + 2);
                         break;
                     }
                 }
-                tmpArr.splice(answer[1], 1,);
-                fs.writeFileSync('todo_cli.txt','');
-                for (let i = 0; i < tmpArr.length - 1; i++) {
-                    let tmp = tmpArr[i];
-                    for (let j = 0; j < tmp.length; j++) {
-                        if (tmp[j] === '[') {
-                            tmp = tmp.slice(j);
-                            break;
-                        }
-                    }
-                    fs.appendFile('todo_cli.txt', `${i} ${tmp}\n`, err => {
-                        if (err) {
-                            console.log('there is an error');
-                        }
-                    })
-                }
+                arrObj.splice(answer[1], 1);
                 console.log(`Deleted "${toDelete}".`);
                 recur();
             } else {
                 console.log("such task doesn't exist.");
                 recur();
             }
+        } else if (answer === 's') {
+            rl.question(`where? (default: ${file})`, answer => {
+                if (answer === '') {
+                    fs.writeFileSync(file, JSON.stringify(arrObj));
+                    recur();
+                } else {
+                    fs.writeFileSync(answer, JSON.stringify(arrObj));
+                    recur();
+                }
+            })
+
         } else {
             console.log("such command doesn't exit.");
             recur();
