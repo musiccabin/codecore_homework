@@ -1,0 +1,32 @@
+<h1><%= cohort.name %></h1>
+
+<p><%= cohort.members %></p>
+
+<form action="/cohorts/<%= cohort.id %>" method="POST">
+  <div>
+    <p><label for='selection-method'>Method</label></p>
+    <p><input type='radio' name='teamCount'>Team Count</p>
+    <p><input type='radio' name='numberPerTeam'>Number Per Team</p>
+  </div>
+  <p><label for='quantity'>Quantity</label></p>
+  <input type='number' name='quantity' value='quantity'/>
+  <input type='submit' value='Assign Teams'>
+</form>
+
+<ul>
+    <li><%= header%></li>
+      <% for (let i = 0; i < teams.length; i++) { %>
+        <li>
+            <%= i+1 %><%= teams[i] %>
+        </li>
+      <% } %>
+</ul>
+
+<form action="/cohorts/<%= cohort.id %>" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete">
+</form>
+
+  <form action="/cohorts/<%= cohort.id %>/edit" method="POST">
+  <input type="submit" value="Edit Cohort" />
+</form>

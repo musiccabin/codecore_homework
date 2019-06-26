@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <form action="/cohorts" method="POST">
+        <ul>
+          <li>
+        <label for="logoURL">Logo URL</label>
+        <input type='text' name='logoURL' placeholder="e.g.example.com/some.png"/>
+      </li>
+      <li>
+        <label for="cohortName">Cohort Name</label>
+        <input type='text' name='cohortName' placeholder="e.g. Taco Lovers"/>
+      </li>
+      <li>
+        <label for="members">Members Separated By Commas</label>
+        <input type='text' name='members' placeholder="e.g.aladdin, jasmine, abu"/>
+      </li>
+        <input type="submit" value="Create Cohort" />
+      </ul>
+      </form> 
+  </body>
+</html>
+
+

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.css" rel="stylesheet">
+  </head>
+  <body>
+  <ul>
+  <% for (let cohort of cohorts) { %>
+    <li>
+      <p><img src="<%=cohort.logoURL%>"><%= cohort.name %></p>
+      <p><%= cohort.members %></p>
+      <input type="button" onclick="location.href='/cohorts/<%= cohort.id %>'" value="Show Cohort" />
+    </li>
+  <% } %>
+</ul>
+  </body>
+</html>
