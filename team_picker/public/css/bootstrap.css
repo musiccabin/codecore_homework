@@ -10065,6 +10065,10 @@ img {
   max-height: 3em;
 }
 
+.cohort-overview {
+  display: flex; flex-wrap: wrap;
+}
+
 .ind-cohort-overview {
   padding: 1em;
   margin-bottom: 1em;
@@ -10088,4 +10092,29 @@ img {
 
 .assign-teams {
   margin-top: 1em;
+}
+
+.show {
+  display: flex; flex-direction: row;
+  justify-content: space-between;
+  align-items: space-between;
+  width: 40em;
+}
+
+.cohort-members {
+  padding: 1em;
+  margin-right: 2em;
+}
+
+.team-picking {
+  padding: 1em;
+}
+
+.picking-outcome {
+  margin-top: 2em;
+}
+
+form {
+  /* min-height: 30vh; */
+  font-size: 1em;
 }

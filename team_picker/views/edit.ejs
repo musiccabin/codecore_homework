@@ -1,12 +1,18 @@
 <%- include('./partials/headers')%>
 <%- include("./partials/nav")%>
   <form action="/cohorts/<%= cohort.id %>">
-    <label for="logoURL">Logo URL</label>
-    <input type='text' name='logoURL' value='<%= cohort.logoURL%>' placeholder="e.g.example.com/some.png" />
-    <label for="cohortName">Cohort Name</label>
-    <input type='text' name='cohortName' value='<%= cohort.name%>' placeholder="e.g. Taco Lovers" />
-    <label for="members">Members Separated By Commas</label>
-    <input type='text' name='members' value='<%= cohort.members%>' placeholder="e.g.aladdin, jasmine, abu" />
-    <input type="submit" value="Update Cohort" />
+    <p><label for="logoURL">Logo URL</label></p>
+    <p><input type='text' name='logoURL' size="50" value='<%= cohort.logoURL%>' placeholder="e.g.example.com/some.png" /></p>
+    <p><label for="cohortName">Cohort Name</label></p>
+    <p><input type='text' name='cohortName' value='<%= cohort.name%>' placeholder="e.g. Taco Lovers" /></p>
+    <p><label for="members">Members Separated By Commas</label></p>
+    <p><textarea
+      name="members"
+      cols="50"
+      rows="5"
+      placeholder="e.g.aladdin, jasmine, abu"
+      value='<%= cohort.members%>'
+    ></textarea></p>
+    <p><input type="submit" value="Update Cohort" /></p>
   </form>
 <%- include("./partials/footer")%>
