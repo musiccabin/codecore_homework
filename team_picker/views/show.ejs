@@ -1,16 +1,20 @@
+<%- include('./partials/headers')%>
+<%- include("./partials/nav")%>
 <h1><%= cohort.name %></h1>
 
 <p><%= cohort.members %></p>
 
 <form action="/cohorts/<%= cohort.id %>" method="POST">
-  <div>
-    <p><label for='selection-method'>Method</label></p>
-    <p><input type='radio' name='teamCount'>Team Count</p>
-    <p><input type='radio' name='numberPerTeam'>Number Per Team</p>
+  <div class='ind-section'>
+    <p class ='form-header'><label for='selection-method'>Method</label></p>
+    <p><input type='radio' name='teamCount'>   Team Count</p>
+    <p><input type='radio' name='numberPerTeam'>   Number Per Team</p>
   </div>
-  <p><label for='quantity'>Quantity</label></p>
+  <div>
+  <p class ='form-header'><label for='quantity'>Quantity</label></p>
   <input type='number' name='quantity' value='quantity'/>
-  <input type='submit' value='Assign Teams'>
+  <p class='assign-teams'><input type='submit' value='Assign Teams'></p>
+  </div>
 </form>
 
 <ul>
@@ -22,6 +26,7 @@
       <% } %>
 </ul>
 
+<div class='actions'>
 <form action="/cohorts/<%= cohort.id %>" method="POST">
   <input type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete">
@@ -30,3 +35,5 @@
   <form action="/cohorts/<%= cohort.id %>/edit" method="POST">
   <input type="submit" value="Edit Cohort" />
 </form>
+</div>
+<%- include("./partials/footer")%>

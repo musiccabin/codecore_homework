@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
+<%- include('./partials/headers')%>
+<%- include("./partials/nav")%>
       <form action="/cohorts" method="POST">
         <ul>
           <li>
@@ -23,7 +17,6 @@
         <input type="submit" value="Create Cohort" />
       </ul>
       </form> 
-  </body>
-</html>
+<%- include("./partials/footer")%>
 
 

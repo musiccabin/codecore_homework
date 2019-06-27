@@ -1,3 +1,5 @@
+@import url(reset.css);
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -61,6 +63,10 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff;
+  padding: 2em;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 [tabindex="-1"]:focus {
@@ -228,6 +234,7 @@ label {
 
 button {
   border-radius: 0;
+  padding: 1em;
 }
 
 button:focus {
@@ -10036,3 +10043,49 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+nav {
+  display: flex; flex-direction: row;
+  align-items: center;
+  margin-bottom: 2em;
+  width: 100%;
+}
+
+.menu {
+  display: flex; flex-direction: row;
+  justify-content: space-around;
+  width: 20em;
+}
+
+.logo {
+  display: flex; flex: 1;
+}
+
+img {
+  max-height: 3em;
+}
+
+.ind-cohort-overview {
+  padding: 1em;
+  margin-bottom: 1em;
+  border: blue;
+  width: 100%;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-header {
+  font-size: 1.3em;
+}
+
+.actions {
+  display: flex; flex-direction: row;
+  align-items: space-between;
+  justify-content: space-between;
+  width: 13em;
+}
+
+.assign-teams {
+  margin-top: 1em;
+}
