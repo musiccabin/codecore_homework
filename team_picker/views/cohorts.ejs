@@ -1,0 +1,13 @@
+<%- include('./partials/headers')%>
+<%- include("./partials/nav")%>
+  <ul class='cohort-overview'>
+  <% for (let cohort of cohorts) { %>
+    <li class='ind-cohort-overview'>
+      <p><img src="<%=cohort.logoURL%>"></p>
+      <h3><%= cohort.name %></h3>
+      <p><%= cohort.members %></p>
+      <input type="button" onclick="location.href='/cohorts/<%= cohort.id %>'" value="Show Cohort" />
+    </li>
+  <% } %>
+</ul>
+<%- include("./partials/footer")%>

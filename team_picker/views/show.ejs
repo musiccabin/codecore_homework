@@ -1,0 +1,43 @@
+<%- include('./partials/headers')%>
+<%- include("./partials/nav")%>
+<div class='show'>
+
+<div class='corhort-members'>
+<h1><%= cohort.name %></h1>
+<p><%= cohort.members %></p>
+<div class='actions'>
+  <form action="/cohorts/<%= cohort.id %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete">
+  </form>
+  
+    <form action="/cohorts/<%= cohort.id %>/edit" method="POST">
+    <input type="submit" value="Edit Cohort" />
+  </form>
+  </div>
+  <ul class='picking-outcome'>
+    <h4><%= header%></h4>
+      <% for (let i = 0; i < teams.length; i++) { %>
+        <li>
+            Team <%= i+1 %>: <%= teams[i] %>
+        </li>
+      <% } %>
+</ul>
+</div>
+
+<div class='team-picking'>
+<form action="/cohorts/<%= cohort.id %>" method="POST">
+  <div class='ind-section'>
+    <p class ='form-header'><label for='selection-method'>Method</label></p>
+    <p><input type='radio' name='teamCount'>   Team Count</p>
+    <p><input type='radio' name='numberPerTeam'>   Number Per Team</p>
+  </div>
+  <div>
+  <p class ='form-header'><label for='quantity'>Quantity</label></p>
+  <input type='number' name='quantity' value='quantity'/>
+  <p class='assign-teams'><input type='submit' value='Assign Teams'></p>
+  </div>
+</form>
+</div>
+</div>
+<%- include("./partials/footer")%>

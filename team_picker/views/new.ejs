@@ -1,0 +1,25 @@
+<%- include('./partials/headers')%>
+<%- include("./partials/nav")%>
+<form action="/cohorts" method="POST">
+  <ul>
+    <li>
+      <p><label for="logoURL">Logo URL</label></p>
+    </p><input type='text' name='logoURL' size="50" placeholder="e.g.example.com/some.png" /></p>
+    </li>
+    <li>
+      <p><label for="cohortName">Cohort Name</label></p>
+      <p><input type='text' name='cohortName' size="50" placeholder="e.g. Taco Lovers" /></p>
+    </li>
+    <li>
+      <p><label for="members">Members Separated By Commas</label></p>
+      <p><textarea
+      name="members"
+      cols="50"
+      rows="5"
+      placeholder="e.g.aladdin, jasmine, abu"
+    ></textarea></p>
+    </li>
+    <input type="submit" value="Create Cohort" />
+  </ul>
+</form>
+<%- include("./partials/footer")%>
