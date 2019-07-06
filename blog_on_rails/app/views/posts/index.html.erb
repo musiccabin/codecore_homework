@@ -1,0 +1,6 @@
+<h1>Looking for something?</h1>
+
+<% @posts.each do |post| %>
+<h3><a href='/posts/<%=post.id%>'><%=post.title%></a></h3>
+<p><%=post.body%></p>
+<%end%>
