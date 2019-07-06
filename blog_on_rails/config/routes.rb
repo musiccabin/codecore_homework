@@ -3,4 +3,5 @@ Rails.application.routes.draw do
 
   get '/', {to: 'posts#index', as: :root}
   resources :posts
+  resources :comments, only: [:new, :create, :destroy]
 end
