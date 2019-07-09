@@ -11,14 +11,21 @@
 </head>
 
 <body>
-  <%= link_to 'Home', root_path%>
-  <%= link_to 'New Post! ^v^', new_post_path%>
-  <% flash.each do |type, message| %>
-  <div class="flash flash-<%= type %>">
-    <%= message%>
-  </div>
-  <% end %>
-  <%= yield %>
+  <header>
+    <h1 class='logo'>Blog On Rails</h1>
+    <nav>
+      <%= link_to 'Home', root_path%>
+      <%= link_to 'New! ^v^', new_post_path%>
+    </nav>
+  </header>
+  <main class="container-fluid">
+    <% flash.each do |type, message| %>
+    <div class="flash flash-<%= type %>">
+      <%= message%>
+    </div>
+    <% end %>
+    <%= yield %>
+  </main>
 </body>
 
 </html>

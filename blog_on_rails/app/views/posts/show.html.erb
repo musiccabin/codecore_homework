@@ -1,10 +1,10 @@
 <h1><%=@post.title%></h1>
 <p><%=@post.body%></p>
 
-<%= link_to 'Edit', edit_post_path(@post)%>
+<%= link_to 'Edit', edit_post_path(@post)%> | 
 <%= link_to 'Delete', post_path(@post), method: :delete, data: {confirm: 'delete post?'}%>
 
-<h3>Comments</h3>
+<h3 class='comment-header'>Comments</h3>
 <% if @comment&.errors&.any? %>
 <% @comment.errors.full_messages.each do |m| %>
 <p><%=m%></p>
@@ -12,15 +12,18 @@
 <%end%>
 
 <%=form_with(model: [@post, @comment], local: true) do |f|%>
-<%=f.text_area :body%>
-<%=f.submit 'Add Comment'%>
+<p style="width: 100%;"><%=f.text_area :body%></p>
+<%=f.submit 'Add Comment', class: "btn btn-primary"%>
 <%end%>
 
+
+<div class='comment-list'>
 <% if @comments.any?%>
 <% @comments.each do |c|%>
-<div>
+<div class='comment'>
     <p><%=c.body%></p>
-    <p><%= time_ago_in_words(c.created_at) %> ago</p><%= link_to 'Delete', post_comment_path(@post, c), method: :delete, data: {confirm: 'delete comment?'}%>
+    <small>Commented <%= time_ago_in_words(c.created_at) %> ago | <%= link_to 'Delete', post_comment_path(@post, c), method: :delete, data: {confirm: 'delete comment?'}%></small>
 </div>
 <%end%>
+</div>
 <%end%>
