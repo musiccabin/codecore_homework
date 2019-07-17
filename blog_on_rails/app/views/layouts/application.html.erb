@@ -14,8 +14,18 @@
   <header>
     <h1 class='logo'>Blog On Rails</h1>
     <nav>
+    <% if current_user %>
+    <div class='menu'>
       <%= link_to 'Home', root_path%>
       <%= link_to 'New! ^v^', new_post_path%>
+    </div>
+      <p>Hello, <%=link_to current_user.name, edit_user_path(current_user)%> | <%= link_to 'Sign Out', session_path, method: :delete%></p>
+    <% else %>
+    <div class='menu'>
+      <%= link_to 'Home', root_path%>
+      <%= link_to 'Sign In', new_session_path%>
+    </div>
+    <%end%>
     </nav>
   </header>
   <main class="container-fluid">

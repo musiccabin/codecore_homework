@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
 
     before_action :find_post, only: [:show, :edit, :destroy]
+    before_action :authenticate_user!, except: [:index, :show]
+    before_action :authorize, only: [:edit, :update, :destroy]
 
     def new
         @post = Post.new
@@ -8,6 +10,7 @@ class PostsController < ApplicationController
 
     def create
         @post = Post.new post_params
+        @post.user = current_user
         if @post.save
             redirect_to post_path(@post)
         else render :new
@@ -28,6 +31,7 @@ class PostsController < ApplicationController
 
     def update
         @post = Post.new post_params
+        @post.user = current_user
         if @post.save
             redirect_to post_path(@post)
         else render :edit
@@ -47,5 +51,9 @@ class PostsController < ApplicationController
 
     def find_post
         @post = Post.find(params[:id])
+    end
+
+    def authorize
+        redirect_to @post, alert: 'you are not authorized to perform this action.' unless current_user == @post.user
     end
 end

@@ -8,12 +8,9 @@
 
 
 <%= form_with model: @post, local: true do |f|%>
-<div class='create-post'>
 <p><%=f.label :title%></p>
-<p><%=f.text_field :title%></p>
+<p class='form-control'><%=f.text_field :title%></p>
 <p><%=f.label :details%></p>
-<p><%=f.text_area :body%></p>
-
+<p class='form-control'><%=f.text_area :body%></p>
 <%=f.submit 'Submit', class: "btn btn-primary"%>
-</div>
 <%end%>

@@ -1,5 +1,6 @@
 <h1><%=@post.title%></h1>
 <p><%=@post.body%></p>
+<p>By <%=@post.user&.name || 'deleted'%></p>
 
 <%= link_to 'Edit', edit_post_path(@post)%> | 
 <%= link_to 'Delete', post_path(@post), method: :delete, data: {confirm: 'delete post?'}%>
@@ -22,7 +23,7 @@
 <% @comments.each do |c|%>
 <div class='comment'>
     <p><%=c.body%></p>
-    <small>Commented <%= time_ago_in_words(c.created_at) %> ago | <%= link_to 'Delete', post_comment_path(@post, c), method: :delete, data: {confirm: 'delete comment?'}%></small>
+    <small>Commented by <%=c.user&.name || 'deleted'%> <%= time_ago_in_words(c.created_at) %> ago | <%= link_to 'Delete', post_comment_path(@post, c), method: :delete, data: {confirm: 'delete comment?'}%></small>
 </div>
 <%end%>
 </div>
