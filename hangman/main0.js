@@ -50,7 +50,16 @@ $(document).ready(() => {
             }
         }
         guessedLetters += letter;
+        if (wrongGuesses === 7) {
+            alert('sorry! better luck next time!');
+        }
+        if (guessedLetters.includes(playingLetters)) {
+            alert('congratulations! you won!')
+        }
     })
+
+    
+    
 
     
 
