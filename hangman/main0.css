@@ -1,0 +1,49 @@
+body {
+    display: flex; flex-direction: column;
+    align-items: center;
+}
+
+section {
+    text-align: center;
+}
+
+.button-selected {
+    background-color: red;
+    color: white;
+    border: 0.1em solid red;
+    border-radius: 12px;
+}
+
+button {
+    background-color: white;
+    border: .1em solid black;
+    margin: .5em;
+    font-size: 2em;
+    border-radius: 12px;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: row;
+    justify-content: space-around;
+}
+
+li {
+    border-bottom: .3em solid black;
+    width: 3em;
+    margin: 1em;
+    font-size: 1.5em;
+}
+
+p {
+    text-align: center;
+}
+
+.not-guessed {
+    display: none;
+}
+
+.hide-image {
+    display: none;
+}
