@@ -42,6 +42,7 @@ $(document).ready(() => {
         const letter = $(event.target).text();
         if (playingLetters.includes(letter)) {
             $(`p:contains(${letter})`).removeClass('not-guessed');
+            $('.answer-header').removeClass('answer-header');
         } else {
             if (!guessedLetters.includes(letter)) {
                 wrongGuesses += 1;
@@ -50,11 +51,11 @@ $(document).ready(() => {
             }
         }
         guessedLetters += letter;
-        if (wrongGuesses === 7) {
-            alert('sorry! better luck next time!');
+        if (wrongGuesses === 6) {
+            setTimeout(function(){ alert("sorry, you died *.* better luck next time!"); }, 500);
         }
         if (guessedLetters.includes(playingLetters)) {
-            alert('congratulations! you won!')
+            alert('congratulations, smarty pants!! =D try another one?')
         }
     })
 
