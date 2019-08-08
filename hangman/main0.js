@@ -31,7 +31,7 @@ $(document).ready(() => {
         'captures memories.': 'camera'
     };
     const hints = Object.keys(data);
-    const hint = hints[Math.floor(Math.random()*(hints.length))];
+    const hint = hints[Math.floor(Math.random() * (hints.length))];
     const playingLetters = data[hint].toUpperCase();
     let guessedLetters = '';
     let wrongGuesses = 0;
@@ -56,37 +56,42 @@ $(document).ready(() => {
         playGame(letter);
     })
 
-    $(document).keypress(function(event) {
+    $(document).keypress(function (event) {
         event.preventDefault();
         const letter = event.key.toUpperCase();
         $(`button:contains(${letter})`).attr('class', 'button-selected');
         playGame(letter);
-        
+
     })
+
+    const player = $('audio').get(0);
 
     function playGame(letter) {
         if (playingLetters.includes(letter)) {
             $(`p:contains(${letter})`).removeClass('not-guessed');
         } else {
             if (!guessedLetters.includes(letter)) {
+                player.play();
                 wrongGuesses += 1;
-                $('img').addClass('hide-image');
-                $(`#img${wrongGuesses}`).removeClass('hide-image');
+                setTimeout(function() {
+                    $('img').addClass('hide-image');
+                    $(`#img${wrongGuesses}`).removeClass('hide-image');
+                },700)
             }
         }
         guessedLetters += letter;
         console.log(wrongGuesses)
         if (wrongGuesses === 6) {
-            setTimeout(function(){
+            setTimeout(function () {
                 const popup = confirm("sorry, you died *.* try again?");
                 finishGame(popup);
-            }, 500);
+            }, 1000);
         }
         if (guessedLetters.includes(playingLetters)) {
-            setTimeout(function(){
+            setTimeout(function () {
                 const popup = confirm("congratulations, smarty pants!! =D try another one?");
                 finishGame(popup);
-            }, 500);
+            }, 1000);
         }
     }
 
@@ -98,40 +103,39 @@ $(document).ready(() => {
         }
     }
 
-    
-    
 
-    
 
-//     $('.blue.circle').on('mouseleave', () => {
-//         console.log("Blue Circle: Goodbye!");
-//     })
 
-//     $('#button-1').on('click', () => {
-//         $('.shape').remove();
-//     })
 
-//     $('#button-2').on('click', () => {
-//         $('#button-2').attr('disabled', true);
-//     })
 
-//     $('#button-3').on('click', () => {
-//         alert('button 3 was clicked!');
-//     })
+    //     $('.blue.circle').on('mouseleave', () => {
+    //         console.log("Blue Circle: Goodbye!");
+    //     })
 
-//     $('tr').on('mouseover', (event) => {
-//         const {
-//             currentTarget
-//         } = event;
-//         $(currentTarget).addClass('highlight');
-//     })
+    //     $('#button-1').on('click', () => {
+    //         $('.shape').remove();
+    //     })
 
-//     $('tr').on('mouseleave', (event) => {
-//         const {
-//             currentTarget
-//         } = event;
-//         $(currentTarget).removeClass('highlight');
-//     })
+    //     $('#button-2').on('click', () => {
+    //         $('#button-2').attr('disabled', true);
+    //     })
+
+    //     $('#button-3').on('click', () => {
+    //         alert('button 3 was clicked!');
+    //     })
+
+    //     $('tr').on('mouseover', (event) => {
+    //         const {
+    //             currentTarget
+    //         } = event;
+    //         $(currentTarget).addClass('highlight');
+    //     })
+
+    //     $('tr').on('mouseleave', (event) => {
+    //         const {
+    //             currentTarget
+    //         } = event;
+    //         $(currentTarget).removeClass('highlight');
+    //     })
 
 })
-    
