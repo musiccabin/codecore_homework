@@ -80,9 +80,8 @@ p {
 }
 
 .goodbye {
-    display: flex;
+    display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    color: red;
     font-family: Arial, Helvetica, sans-serif;
 }
 

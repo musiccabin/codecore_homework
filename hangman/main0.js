@@ -85,13 +85,13 @@ $(document).ready(() => {
             setTimeout(function () {
                 const popup = confirm("sorry, you died *.* try again?");
                 finishGame(popup);
-            }, 1000);
+            }, 950);
         }
         if (guessedLetters.includes(playingLetters)) {
             setTimeout(function () {
                 const popup = confirm("congratulations, smarty pants!! =D try another one?");
                 finishGame(popup);
-            }, 1000);
+            }, 950);
         }
     }
 
@@ -99,7 +99,11 @@ $(document).ready(() => {
         if (popup == true) {
             location.reload();
         } else {
-            $('body').replaceWith("<h1 class='goodbye'>thanks for playing! goodbye =)</h1>");
+            let goodbye = $("<h1 style='color: red; padding: 2.5em;'>thanks for playing! goodbye =)</h1>");
+            let body = $("<div class='goodbye'></div>");
+            body.html(goodbye);
+            body.append($("<img src='img/goodbye.png'>"));
+            $('body').replaceWith(body);
         }
     }
 
