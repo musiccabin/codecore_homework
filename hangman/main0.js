@@ -16,7 +16,20 @@ $(document).ready(() => {
     // $('#green-container').append(e0);
     // $('#green-container').prepend(e0.clone());
 
-    const data = {'this animal is common in canada.': 'beaver', 'A giant cloud of dust in the space.': 'nebula', 'Couples and friends sometimes have this.':'arguments'};
+    const data = {
+        'this animal is common in canada.': 'beaver',
+        'a giant cloud of dust in the space.': 'nebula',
+        'couples and friends sometimes have this.': 'arguments',
+        'feeling uncomfortable or embarrased.': 'awkward',
+        'color white.': 'ivory',
+        'scary but immortal.': 'zombie',
+        'something you cannot live without.': 'oxygen',
+        'think of a number that rhymes with elf.': 'twelfth',
+        'made with rice and seaweed.': 'sushi',
+        'think of NBA champions': 'raptors',
+        "why does the name of this fruit have a person's name in it?": 'jackfruit',
+        'captures memories.': 'camera'
+    };
     const hints = Object.keys(data);
     const hint = hints[Math.floor(Math.random()*(hints.length))];
     const playingLetters = data[hint].toUpperCase();
@@ -40,9 +53,20 @@ $(document).ready(() => {
     $('button').on('click', (event) => {
         $(event.target).attr('class', 'button-selected');
         const letter = $(event.target).text();
+        playGame(letter);
+    })
+
+    $(document).keypress(function(event) {
+        event.preventDefault();
+        const letter = event.key.toUpperCase();
+        $(`button:contains(${letter})`).attr('class', 'button-selected');
+        playGame(letter);
+        
+    })
+
+    function playGame(letter) {
         if (playingLetters.includes(letter)) {
             $(`p:contains(${letter})`).removeClass('not-guessed');
-            $('.answer-header').removeClass('answer-header');
         } else {
             if (!guessedLetters.includes(letter)) {
                 wrongGuesses += 1;
@@ -51,13 +75,28 @@ $(document).ready(() => {
             }
         }
         guessedLetters += letter;
+        console.log(wrongGuesses)
         if (wrongGuesses === 6) {
-            setTimeout(function(){ alert("sorry, you died *.* better luck next time!"); }, 500);
+            setTimeout(function(){
+                const popup = confirm("sorry, you died *.* try again?");
+                finishGame(popup);
+            }, 500);
         }
         if (guessedLetters.includes(playingLetters)) {
-            alert('congratulations, smarty pants!! =D try another one?')
+            setTimeout(function(){
+                const popup = confirm("congratulations, smarty pants!! =D try another one?");
+                finishGame(popup);
+            }, 500);
         }
-    })
+    }
+
+    function finishGame(popup) {
+        if (popup == true) {
+            location.reload();
+        } else {
+            $('body').replaceWith("<h1 class='goodbye'>thanks for playing! goodbye =)</h1>");
+        }
+    }
 
     
     
