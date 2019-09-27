@@ -1,3 +1,19 @@
+let data = {
+    'this animal is common in canada.': 'beaver',
+    'a giant cloud of dust in the space.': 'nebula',
+    'couples and friends sometimes have this.': 'arguments',
+    'feeling uncomfortable or embarrased.': 'awkward',
+    'color white.': 'ivory',
+    'scary but immortal.': 'zombie',
+    'something you cannot live without.': 'oxygen',
+    'think of a number that rhymes with elf.': 'twelfth',
+    'made with rice and seaweed.': 'sushi',
+    'think of NBA champions': 'raptors',
+    "the name of this fruit have a person's name in it?": 'jackfruit',
+    'captures memories.': 'camera'
+};
+let correct = false;
+
 $(document).ready(() => {
 
     // $('a').attr('class', 'highlight');
@@ -16,20 +32,6 @@ $(document).ready(() => {
     // $('#green-container').append(e0);
     // $('#green-container').prepend(e0.clone());
 
-    const data = {
-        'this animal is common in canada.': 'beaver',
-        'a giant cloud of dust in the space.': 'nebula',
-        'couples and friends sometimes have this.': 'arguments',
-        'feeling uncomfortable or embarrased.': 'awkward',
-        'color white.': 'ivory',
-        'scary but immortal.': 'zombie',
-        'something you cannot live without.': 'oxygen',
-        'think of a number that rhymes with elf.': 'twelfth',
-        'made with rice and seaweed.': 'sushi',
-        'think of NBA champions': 'raptors',
-        "why does the name of this fruit have a person's name in it?": 'jackfruit',
-        'captures memories.': 'camera'
-    };
     const hints = Object.keys(data);
     const hint = hints[Math.floor(Math.random() * (hints.length))];
     const playingLetters = data[hint].toUpperCase();
@@ -80,14 +82,36 @@ $(document).ready(() => {
             }
         }
         guessedLetters += letter;
-        console.log(wrongGuesses)
+        // console.log(wrongGuesses)
         if (wrongGuesses === 6) {
             setTimeout(function () {
                 const popup = confirm("sorry, you died *.* try again?");
                 finishGame(popup);
             }, 950);
         }
-        if (guessedLetters.includes(playingLetters)) {
+        // console.log(guessedLetters)
+        // const toCheckAgainst = [];
+        const toCheckAgainst = [...new Set(playingLetters)];
+        // for (const e of arr) {
+        //     toCheckAgainst.push(e);
+        // };
+        // console.log(guessedLetters.includes(toCheckAgainst));
+        console.log('to check against: ', toCheckAgainst.join(''));
+        console.log('playing letters: ', playingLetters);
+        console.log('guessed letters: ',guessedLetters);
+        // console.log('type of toCheckAgainst', typeof(toCheckAgainst));
+        // console.log('type of guessedLetters', typeof(guessedLetters));
+        
+        for (const letter of (String(toCheckAgainst.join('')))) {
+            if (guessedLetters.includes(letter)) {
+                correct = true;
+            } else {
+                correct = false;
+                break;
+            }
+        }
+
+        if (correct === true) {
             setTimeout(function () {
                 const popup = confirm("congratulations, smarty pants!! =D try another one?");
                 finishGame(popup);
@@ -106,8 +130,6 @@ $(document).ready(() => {
             $('body').replaceWith(body);
         }
     }
-
-
 
 
 
