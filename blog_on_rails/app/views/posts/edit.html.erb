@@ -1,0 +1,17 @@
+<h3 class='page-header'>Edit Your Post Here!!</h3>
+
+<% if @post.errors.any? %>
+<% @post.errors.full_messages.each do |m|%>
+<p><%=m%></p>
+<%end%>
+<%end%>
+
+<%= form_with model: @post, local: true do |f|%>
+<div class='create-post'>
+<p><%=f.label :title%></p>
+<p><%=f.text_field :title%></p>
+<p><%=f.label :details%></p>
+<p><%=f.text_area :body%></p>
+<%=f.submit 'Update', class: "btn btn-primary"%>
+<div class='create-post'>
+<%end%>

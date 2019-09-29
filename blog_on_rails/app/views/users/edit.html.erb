@@ -1,0 +1,56 @@
+<h1>Edit My Info</h1>
+
+<%= form_with model: @user, local: true do |f| %>
+
+<% if @user.errors.any? %>
+<p>
+    <%= @user.errors.full_messages.join(', ') %>
+</p>
+<% end %>
+<%if @errors%>
+<p><%=@errors%></p>
+<%end%>
+<div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+</div>
+<div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+</div>
+
+<button type="button" id='change-password'>Change Password</button>
+<div id="change-password-form">
+<div>
+<%=f.label :current_password%>
+<%=f.password_field :password%>
+</div>
+<div>
+<%=f.label :new_password%>
+<%=f.password_field :new_password%>
+</div>
+<div>
+<%=f.label :new_password_again%>
+<%=f.password_field :password_confirmation%>
+</div>
+</div>
+<%=f.submit class: 'btn btn-primary'%>
+<%end%>
+
+
+<script type="text/javascript">
+    const x = document.getElementById("change-password-form");   
+    if (params[password]) {
+        x.style.display = "block";
+    } else {
+        x.style.display = 'none';
+    }
+    document.getElementById("change-password").onclick = function () {
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
